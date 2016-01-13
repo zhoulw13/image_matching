@@ -1,4 +1,6 @@
-test: test.hs 
-	ghc -o test test.hs
+match: match.hs 
+	ghc -o match match.hs
+origin: origin.hs
+	ghc -o origin origin.hs
 clean: 
-	rm -rf *.o ~* *.hi test
+	rm -rf *.o ~* *.hi match origin
