@@ -1,6 +1,6 @@
-match: match.hs 
-	ghc -o match match.hs
-origin: origin.hs
-	ghc -o origin origin.hs
-clean: 
-	rm -rf *.o ~* *.hi match origin
+Main: Main.hs
+	ghc -o Main Main.hs
+Partial: Partial.hs
+	ghc -o Partial Partial.hs
+clean:
+	rm -rf *.o ~* *.hi Main Partial

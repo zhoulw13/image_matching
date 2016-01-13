@@ -1,8 +1,10 @@
 module Main where
-import Codec.BMP
 import System.IO
+import System.Environment
+import Data.Char
+import Codec.BMP
 import qualified Data.ByteString as B
-import Origin
+import Partial
 
 match :: String -> String -> Int -> IO()
 match img1 img2 mode = do
@@ -15,7 +17,9 @@ match img1 img2 mode = do
       par_img = B.unpack par_rgba
       raw_img = B.unpack raw_rgba in do
       -- 4 dims array
-        let index = 10 calculate raw_img par_img 0
+        let index =  case mode of
+              0 -> partial raw_img par_img 0
+              _ -> 1
             height = raw_height - par_height - (div index raw_width)
             width = mod index raw_width in do
               print (width, height)
