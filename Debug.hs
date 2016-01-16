@@ -20,16 +20,16 @@ match img1 img2 mode = do
       raw_img = B.unpack raw_rgba in do
       -- 4 dims array
         let index =  case mode of
-              0 -> partial raw_img par_img raw_width par_width 0
-              4 -> taint raw_img par_img raw_width par_width 0
-              --3 -> medianFilter par_img par_width 3
+              --0 -> partial raw_img par_img raw_width par_width 0
+              --4 -> taint raw_img par_img raw_width par_width 0
+              3 -> medianFilter par_img par_width 3
             --temp = medianFilter raw_img raw_width mode
-            --filter_img = B.pack index
+            filter_img = B.pack index
             --temp_img = B.pack temp
             --temp_bmp = packRGBA32ToBMP raw_width raw_height temp_img
-            --filter_bmp = packRGBA32ToBMP par_width par_height filter_img in do
-            height = raw_height - par_height - (div index raw_width)
-            width = mod index raw_width in do
-              print (width, height)
-              --writeBMP "test.bmp" filter_bmp
+            filter_bmp = packRGBA32ToBMP par_width par_height filter_img in do
+            --height = raw_height - par_height - (div index raw_width)
+            --width = mod index raw_width in do
+              --print (width, height)
+              writeBMP "test.bmp" filter_bmp
               --writeBMP "raw_test.bmp" temp_bmp

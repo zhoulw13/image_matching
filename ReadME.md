@@ -7,7 +7,7 @@ A haskell project for image Matching
 
 ***
 ## **Compile**
-`ghc --make -rtsopts Main.hs`
+`ghc -rtsopts Main.hs`
 ***
 ## **Run**
 `./Main [input image 1] [input image 2] mode +RTS -K100000000 -RTS`
@@ -18,7 +18,7 @@ A haskell project for image Matching
   * 1: linear smooth filter (not finished yet)
   * 2: color enhancement (not finished yet)
   * 3: salt and pepper noise (not finished yet)
-  * 4: black pollution
+  * 4: taint mode
 
 ## **Output**
 `(width, height)`
