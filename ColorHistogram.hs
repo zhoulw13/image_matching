@@ -1,5 +1,6 @@
 module ColorHistogram where
 import GHC.Word as W
+import Data.Array
 
 colorHistogram :: [W.Word8] -> [[Int]] -> W.Word8 -> Int -> [[Int]]
 colorHistogram [] lst dims width = []

@@ -1,39 +1,48 @@
 module GuassianBlur where
 import GHC.Word as W
+import Data.Array
 import ColorHistogram
+import Debug.Trace
 
 guassianBlurMode :: [W.Word8] -> [W.Word8] -> W.Word8 -> Int -> Int -> Int -> Int
 guassianBlurMode raw par dims raw_width par_width par_height =
   index-(par_width-1)-raw_width*(par_height-1)
-  where par_feature = colorHistogram par [] dims par_width
-        raw_feature = colorHistogram raw [] dims raw_width
-        x = last raw_feature
-        --x = last par_feature
-        index = (last x) -- +(last y)
-        --index = optimization raw_feature (last par_feature) raw_width par_width par_height 0 0 (par_width-1) (par_height-1)
+  where raw_feature = colorHistogram raw [] dims raw_width
+        par_feature = colorHistogram par [] dims par_width
+        len = length raw_feature
+        raw_arr = listArray (0, len-1) raw_feature :: Array Int [Int]
+        par_img = [last par_feature]
+        par_arr = listArray (0, 0) par_img :: Array Int [Int]
+        --x = test raw_arr par_arr raw_width par_width par_height 900 600
+        --x = last raw_feature
+        --y = last par_feature
+        --index = (last x) -- +(last y)
+        index = optimization raw_arr par_arr raw_width par_width par_height 0 0 len (par_width-1) (par_height-1)
 
-optimization :: [[Int]] -> [Int] -> Int -> Int -> Int -> Integer -> Int -> Int -> Int -> Int
-optimization raw par rw pw ph mx re width height =
-  if simi > mx then
-    optimization raw par rw pw ph simi (width+height*rw) next_w next_h
+
+optimization :: Array Int [Int] -> Array Int [Int] -> Int -> Int -> Int -> Integer -> Int -> Int -> Int -> Int -> Int
+optimization raw par rw pw ph mx re len width height =
+  if index >= len then re
+  else if simi > mx then
+    optimization raw par rw pw ph simi index len next_w next_h
   else
-    optimization raw par rw pw ph mx re next_w next_h
+    optimization raw par rw pw ph mx re len next_w next_h
   where index = width+height*rw
         raw_f =
           if width < pw then
             if height < ph then
-              raw!!index
+              raw!index
             else
-              operate (-) (raw!!index) (raw!!(index-(height-ph)*rw))
+              operate (-) (raw!index) (raw!(index-ph*rw))
           else
             if height < ph then
-              operate (-) (raw!!index) (raw!!(index-width))
+              operate (-) (raw!index) (raw!(index-pw))
             else
-              operate (+) (operate (-) (operate (-) (raw!!index) (raw!!(index-width))) (raw!!(index-(height-ph)*rw))) (raw!!(index-width-(height-ph)*rw))
-        simi = similarity raw_f par
+              operate (+) (operate (-) (operate (-) (raw!index) (raw!(index-pw))) (raw!(index-ph*rw))) (raw!(index-pw-ph*rw))
+        simi = similarity raw_f (par!0)
         next_w =
           if width == (rw-1) then
-            pw-1
+            0
           else
             width+1
         next_h =
@@ -41,3 +50,8 @@ optimization raw par rw pw ph mx re width height =
             height+1
           else
             height
+
+test raw par rw pw ph width height =
+  sum a
+  where index = width+height*rw
+        a = operate (+) (operate (-) (operate (-) (raw!index) (raw!(index-pw))) (raw!(index-ph*rw))) (raw!(index-pw-ph*rw))
