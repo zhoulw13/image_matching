@@ -13,17 +13,13 @@ guassianBlurMode raw par dims raw_width par_width par_height =
         raw_arr = listArray (0, len-1) raw_feature :: Array Int [Int]
         par_img = [last par_feature]
         par_arr = listArray (0, 0) par_img :: Array Int [Int]
-        --x = test raw_arr par_arr raw_width par_width par_height 900 600
-        --x = last raw_feature
-        --y = last par_feature
-        --index = (last x) -- +(last y)
         index = optimization raw_arr par_arr raw_width par_width par_height (10^10) 0 len (par_width-1) (par_height-1)
 
 
 optimization :: Array Int [Int] -> Array Int [Int] -> Int -> Int -> Int -> Integer -> Int -> Int -> Int -> Int -> Int
 optimization raw par rw pw ph mx re len width height =
   if index >= len then re
-  else if simi < mx then
+  else if simi <= mx then
     optimization raw par rw pw ph simi index len next_w next_h
   else
     optimization raw par rw pw ph mx re len next_w next_h
