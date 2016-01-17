@@ -43,4 +43,4 @@ initiate d = 0 : initiate (d-1)
 
 similarity :: [Int] -> [Int] -> Integer
 similarity [] [] = 0
-similarity (x:xs) (y:ys) = ((fromIntegral x :: Integer) * (fromIntegral y :: Integer)) + similarity xs ys
+similarity (x:xs) (y:ys) = ((fromIntegral x :: Integer) - (fromIntegral y :: Integer))^2 + similarity xs ys
