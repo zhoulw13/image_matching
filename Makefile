@@ -1,6 +1,4 @@
 Main: Main.hs
-	ghc -o Main Main.hs
-Partial: Partial.hs
-	ghc -o Partial Partial.hs
+	ghc -rtsopts Main.hs
 clean:
-	rm -rf *.o ~* *.hi Main Partial
+	rm -rf *.o ~* *.hi Main
