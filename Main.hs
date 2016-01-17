@@ -31,5 +31,4 @@ main = do
               _ -> if (raw_width*raw_height) < 4000000 then  guassianBlurMode raw_img par_img 3 raw_width par_width par_height else cheat raw_width raw_height par_width par_height
             height = raw_height - par_height - (div index raw_width)
             width = mod index raw_width in do
-              print index
               print (width, height)
