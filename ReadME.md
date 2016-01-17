@@ -15,9 +15,9 @@ A haskell project for image Matching
 * input image 2: partial image of original image with noise
 + mode: type of noise
   * 0: no noise
-  * 1: linear smooth filter (not finished yet)
+  * 1: linear smooth filter
   * 2: color enhancement (not finished yet)
-  * 3: salt and pepper noise (not finished yet)
+  * 3: salt and pepper noise
   * 4: taint mode
 
 ## **Output**
